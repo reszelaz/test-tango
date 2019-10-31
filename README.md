@@ -303,7 +303,7 @@ Thread 10 (Thread 0x7f0b93fff700 (LWP 17597)):
 #126 0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
 ```
 
-You can find backtrace of all threads in `threads_backtrace.txt` file.  
+You can find backtrace of all threads in [`threads_backtrace.txt`](https://github.com/reszelaz/test-tango/blob/master/threads_backtrace.txt) file.
 
 In order to reproduce the problem:
 1. Register in Tango Database one DeviceServer DS with instance name `test`
@@ -317,7 +317,7 @@ In order to reproduce the problem:
 4. Start client2: `python3 client2.py`
 5. Wait no more than 10 s...
 
-I was not able to reproduce the problem with C++. See the files in `cpp`
+I was not able to reproduce the problem with C++. See the files in [`cpp`](https://github.com/reszelaz/test-tango/tree/master/cpp)
 subdirectory of this project, you can compile it with `make -f Makefile.multi`.
 But I'm not at all used to program in C++ so it may be not exactly equivalent.
 
