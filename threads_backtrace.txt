@@ -1,0 +1,604 @@
+zreszela@pc255:~/workspace/test2-tango-py3> gdb -p 17548
+GNU gdb (Debian 7.12-6) 7.12.0.20161007-git
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word".
+Attaching to process 17548
+[New LWP 17562]
+[New LWP 17563]
+[New LWP 17565]
+[New LWP 17566]
+[New LWP 17567]
+[New LWP 17568]
+[New LWP 17569]
+[New LWP 17580]
+[New LWP 17597]
+[New LWP 17599]
+[New LWP 17600]
+[New LWP 17601]
+[New LWP 17602]
+[New LWP 17627]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+pthread_cond_wait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+185     ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S: No such file or directory.
+(gdb) thread apply all bt
+
+Thread 15 (Thread 0x7f0b917fa700 (LWP 17627)):
+#0  pthread_cond_wait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+#1  0x00007f0bb1f86c60 in omni_condition::wait() () from /usr/lib/libomnithread.so.3
+#2  0x00007f0bb3954758 in ReadersWritersLock::readerIn (this=<optimized out>) at ../../../lib/cpp/server/readers_writers_lock.h:66
+#3  ReaderLock::ReaderLock (l=..., this=<synthetic pointer>) at ../../../lib/cpp/server/readers_writers_lock.h:176
+#4  Tango::ZmqEventConsumer::get_subscribed_event_ids (this=<optimized out>, _dev=_dev@entry=0x7f0b70005bd0,
+    _ids=std::vector of length 0, capacity 0) at zmqeventconsumer.cpp:3341
+#5  0x00007f0bb389173c in Tango::DeviceProxy::~DeviceProxy (this=0x7f0b70005bd0, __in_chrg=<optimized out>) at devapi_base.cpp:2493
+#6  0x00007f0bb38918f9 in Tango::DeviceProxy::~DeviceProxy (this=0x7f0b70005bd0, __in_chrg=<optimized out>) at devapi_base.cpp:2531
+#7  0x00007f0bb446778a in boost::detail::sp_counted_base::release (this=0x7f0b700052f0)
+    at /usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp:146
+#8  0x00007f0bb447e6cd in boost::detail::sp_counted_base::release (this=<optimized out>)
+    at /usr/include/boost/python/object/pointer_holder.hpp:52
+#9  boost::detail::shared_count::~shared_count (this=0x7f0b700063e8, __in_chrg=<optimized out>)
+    at /usr/include/boost/smart_ptr/detail/shared_count.hpp:473
+#10 boost::shared_ptr<Tango::DeviceProxy>::~shared_ptr (this=0x7f0b700063e0, __in_chrg=<optimized out>)
+    at /usr/include/boost/smart_ptr/shared_ptr.hpp:336
+#11 boost::python::objects::pointer_holder<boost::shared_ptr<Tango::DeviceProxy>, Tango::DeviceProxy>::~pointer_holder (
+    this=0x7f0b700063d0, __in_chrg=<optimized out>) at /usr/include/boost/python/object/pointer_holder.hpp:52
+#12 0x00007f0bb346570c in ?? () from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#13 0x0000556036c18613 in ?? ()
+#14 0x0000556036bcb4c8 in PyEval_EvalFrameEx ()
+#15 0x0000556036bb716f in PyEval_EvalCodeEx ()
+#16 0x0000556036c011ef in ?? ()
+#17 0x0000556036c4ae17 in PyObject_Call ()
+#18 0x0000556036bc784e in PyEval_EvalFrameEx ()
+#19 0x0000556036bceb06 in ?? ()
+#20 0x0000556036bca9e6 in PyEval_EvalFrameEx ()
+#21 0x0000556036bb78a7 in PyEval_EvalCodeEx ()
+#22 0x0000556036c010e3 in ?? ()
+#23 0x0000556036c4ae17 in PyObject_Call ()
+#24 0x0000556036b6834e in ?? ()
+#25 0x0000556036c4ae17 in PyObject_Call ()
+#26 0x0000556036bb5f30 in PyEval_CallObjectWithKeywords ()
+#27 0x0000556036c96ab1 in PyEval_CallMethod ()
+#28 0x00007f0bb44eb15b in boost::python::call_method<void, boost::reference_wrapper<Tango::Attribute> > (self=0x7f0b9a168420,
+    name=0x556037d648d0 "__read_attr2_wrapper__", a0=...) at /usr/include/boost/python/call_method.hpp:66
+#29 0x00007f0bb44e2a78 in PyAttr::read (this=0x556037d79f88, dev=<optimized out>, att=...)
+    at /home/zreszela/workspace/pytango/ext/server/attr.cpp:76
+#30 0x00007f0bb39fb910 in Tango::Device_3Impl::read_attributes_no_except (this=this@entry=0x556037d95d70, names=..., aid=...,
+    second_try=second_try@entry=true, idx=std::vector of length 1, capacity 1 = {...}) at device_3.cpp:541
+#31 0x00007f0bb3a17df7 in Tango::Device_5Impl::read_attributes_5 (this=0x556037d95d70, names=..., source=<optimized out>, cl_id=...)
+    at device_5.cpp:340
+#32 0x00007f0bb3bc805b in _0RL_lcfn_6fe2f94a21a10053_84000000 (cd=0x7f0b917f9aa0, svnt=<optimized out>) at tangoSK.cpp:6272
+#33 0x00007f0bb2278b69 in omniCallHandle::upcall(omniServant*, omniCallDescriptor&) () from /usr/lib/libomniORB4.so.1
+#34 0x00007f0bb3bca1b0 in Tango::_impl_Device_5::_dispatch (this=<optimized out>, _handle=...) at tangoSK.cpp:7158
+#35 0x00007f0bb2271f6d in omni::omniOrbPOA::dispatch(omniCallHandle&, omniLocalIdentity*) () from /usr/lib/libomniORB4.so.1
+#36 0x00007f0bb2251116 in omniLocalIdentity::dispatch(omniCallHandle&) () from /usr/lib/libomniORB4.so.1
+#37 0x00007f0bb2291d20 in omni::GIOP_S::handleRequest() () from /usr/lib/libomniORB4.so.1
+---Type <return> to continue, or q <return> to quit---
+#38 0x00007f0bb2292a98 in omni::GIOP_S::dispatcher() () from /usr/lib/libomniORB4.so.1
+#39 0x00007f0bb228f6c5 in omni::giopWorker::real_execute() () from /usr/lib/libomniORB4.so.1
+#40 0x00007f0bb228fd4f in omni::giopWorker::execute() () from /usr/lib/libomniORB4.so.1
+#41 0x00007f0bb224602d in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#42 0x00007f0bb3b84c4c in Tango::create_PyPerThData (info=...) at utils.cpp:3234
+#43 0x00007f0bb2245f24 in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#44 0x00007f0bb22465ff in omniAsyncWorker::run(void*) () from /usr/lib/libomniORB4.so.1
+#45 0x00007f0bb1f876d9 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#46 0x00007f0bb5a5e494 in start_thread (arg=0x7f0b917fa700) at pthread_create.c:333
+#47 0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 14 (Thread 0x7f0b91ffb700 (LWP 17602)):
+#0  0x00007f0bb4c520c3 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f0bb1b04914 in ?? () from /usr/lib/x86_64-linux-gnu/libzmq.so.5
+#2  0x00007f0bb1b4085c in ?? () from /usr/lib/x86_64-linux-gnu/libzmq.so.5
+#3  0x00007f0bb5a5e494 in start_thread (arg=0x7f0b91ffb700) at pthread_create.c:333
+#4  0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 13 (Thread 0x7f0b927fc700 (LWP 17601)):
+#0  0x00007f0bb4c520c3 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f0bb1b04914 in ?? () from /usr/lib/x86_64-linux-gnu/libzmq.so.5
+#2  0x00007f0bb1b4085c in ?? () from /usr/lib/x86_64-linux-gnu/libzmq.so.5
+#3  0x00007f0bb5a5e494 in start_thread (arg=0x7f0b927fc700) at pthread_create.c:333
+#4  0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 12 (Thread 0x7f0b92ffd700 (LWP 17600)):
+#0  0x00007f0bb4c4867d in poll () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f0bb1b4a178 in zmq_poll () from /usr/lib/x86_64-linux-gnu/libzmq.so.5
+#2  0x00007f0bb3962763 in zmq::poll (timeout_=-1, nitems_=<optimized out>, items_=0x7f0b740031c0) at ./zmq.hpp:59
+#3  Tango::ZmqEventConsumer::run_undetached (this=0x7f0b8000c5a0, arg=<optimized out>) at zmqeventconsumer.cpp:222
+#4  0x00007f0bb1f876c1 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#5  0x00007f0bb5a5e494 in start_thread (arg=0x7f0b92ffd700) at pthread_create.c:333
+#6  0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 11 (Thread 0x7f0b937fe700 (LWP 17599)):
+#0  pthread_cond_wait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+#1  0x00007f0bb1f86c60 in omni_condition::wait() () from /usr/lib/libomnithread.so.3
+#2  0x00007f0bb3944be8 in ReadersWritersLock::readerIn (this=<optimized out>) at ../../../lib/cpp/server/readers_writers_lock.h:66
+#3  ReaderLock::ReaderLock (l=..., this=<synthetic pointer>) at ../../../lib/cpp/server/readers_writers_lock.h:176
+#4  Tango::EventConsumerKeepAliveThread::run_undetached (this=0x7f0b80007800, arg=<optimized out>) at eventkeepalive.cpp:592
+#5  0x00007f0bb1f876c1 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#6  0x00007f0bb5a5e494 in start_thread (arg=0x7f0b937fe700) at pthread_create.c:333
+#7  0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 10 (Thread 0x7f0b93fff700 (LWP 17597)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x0000556036bc4e6a in ?? ()
+#2  0x0000556036bc50d3 in PyEval_RestoreThread ()
+#3  0x0000556036c95c4a in PyGILState_Ensure ()
+#4  0x00007f0bb43c76ca in AutoPythonGIL::AutoPythonGIL (safe=true, this=<synthetic pointer>)
+---Type <return> to continue, or q <return> to quit---
+    at /home/zreszela/workspace/pytango/ext/pytgutils.h:48
+#5  (anonymous namespace)::_push_event<Tango::AttrConfEventData> (ev=0x7f0b80018040, self=0x7f0b8002cdf0)
+    at /home/zreszela/workspace/pytango/ext/callback.cpp:228
+#6  PyCallBackPushEvent::push_event (this=0x7f0b8002cdf0, ev=0x7f0b80018040) at /home/zreszela/workspace/pytango/ext/callback.cpp:332
+#7  0x00007f0bb3932c2f in Tango::EventConsumer::get_fire_sync_event (this=this@entry=0x7f0b8000c5a0, device=device@entry=0x7f0b800067f0,
+    callback=callback@entry=0x7f0b8002cdf0, ev_queue=ev_queue@entry=0x0, event=event@entry=Tango::ATTR_CONF_EVENT,
+    event_name="idl5_attr_conf", obj_name="double_scalar", cb=...,
+    callback_key="tango://pc255.cells.es:10000/sys/tg_test/1/double_scalar.idl5_attr_conf") at event.cpp:3265
+#8  0x00007f0bb3934492 in Tango::EventConsumer::connect_event (this=this@entry=0x7f0b8000c5a0, device=device@entry=0x7f0b800067f0,
+    obj_name="double_scalar", event=event@entry=Tango::ATTR_CONF_EVENT, callback=callback@entry=0x7f0b8002cdf0,
+    ev_queue=ev_queue@entry=0x0, filters=std::vector of length 0, capacity 0, event_name="idl5_attr_conf", event_id=<optimized out>)
+    at event.cpp:1809
+#9  0x00007f0bb3935de4 in Tango::EventConsumer::subscribe_event (this=0x7f0b8000c5a0, device=device@entry=0x7f0b800067f0,
+    attribute="double_scalar", event=event@entry=Tango::ATTR_CONF_EVENT, callback=callback@entry=0x7f0b8002cdf0,
+    ev_queue=ev_queue@entry=0x0, filters=std::vector of length 0, capacity 0, stateless=false) at event.cpp:1261
+#10 0x00007f0bb3936350 in Tango::EventConsumer::subscribe_event (this=<optimized out>, device=device@entry=0x7f0b800067f0,
+    attribute="double_scalar", event=event@entry=Tango::ATTR_CONF_EVENT, callback=callback@entry=0x7f0b8002cdf0,
+    filters=std::vector of length 0, capacity 0, stateless=false) at event.cpp:1140
+#11 0x00007f0bb3849312 in Tango::DeviceProxy::subscribe_event (this=0x7f0b800067f0, attr_name="double_scalar",
+    event=Tango::ATTR_CONF_EVENT, callback=0x7f0b8002cdf0, filters=std::vector of length 0, capacity 0, stateless=<optimized out>)
+    at devapi_base.cpp:7708
+#12 0x00007f0bb4467b1a in PyDeviceProxy::subscribe_event_attrib (py_self=..., attr_name="double_scalar", event=Tango::ATTR_CONF_EVENT,
+    py_cb_or_queuesize=..., py_filters=..., stateless=<optimized out>, extract_as=PyTango::ExtractAsNumpy)
+    at /home/zreszela/workspace/pytango/ext/device_proxy.cpp:609
+#13 0x00007f0bb447670a in boost::python::detail::invoke<boost::python::to_python_value<int const&>, int (*)(boost::python::api::object, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Tango::EventType, boost::python::api::object, boost::python::api::object&, bool, PyTango::ExtractAs), boost::python::arg_from_python<boost::python::api::object>, boost::python::arg_from_python<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>, boost::python::arg_from_python<Tango::EventType>, boost::python::arg_from_python<boost::python::api::object>, boost::python::arg_from_python<boost::python::api::object&>, boost::python::arg_from_python<bool>, boost::python::arg_from_python<PyTango::ExtractAs> > (ac6=..., ac5=..., ac4=..., ac3=<synthetic pointer>..., ac2=...,
+    ac1=..., ac0=<synthetic pointer>..., f=<optimized out>, rc=...) at /usr/include/boost/python/detail/invoke.hpp:75
+#14 boost::python::detail::caller_arity<7u>::impl<int (*)(boost::python::api::object, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Tango::EventType, boost::python::api::object, boost::python::api::object&, bool, PyTango::ExtractAs), boost::python::default_call_policies, boost::mpl::vector8<int, boost::python::api::object, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Tango::EventType, boost::python::api::object, boost::python::api::object&, bool, PyTango::ExtractAs> >::operator() (args_=<optimized out>, this=<optimized out>) at /usr/include/boost/python/detail/caller.hpp:223
+#15 boost::python::objects::caller_py_function_impl<boost::python::detail::caller<int (*)(boost::python::api::object, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Tango::EventType, boost::python::api::object, boost::python::api::object&, bool, PyTango::ExtractAs), boost::python::default_call_policies, boost::mpl::vector8<int, boost::python::api::object, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Tango::EventType, boost::python::api::object, boost::python::api::object&, bool, PyTango::ExtractAs> > >::operator() (this=<optimized out>, args=<optimized out>, kw=<optimized out>)
+    at /usr/include/boost/python/object/py_function.hpp:38
+#16 0x00007f0bb34694ad in boost::python::objects::function::call(_object*, _object*) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#17 0x00007f0bb34696a8 in ?? () from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#18 0x00007f0bb347033b in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#19 0x00007f0bb44a3b83 in boost::python::detail::translate_exception<Tango::NotAllowed, void (*)(Tango::NotAllowed const&)>::operator() (
+    this=<optimized out>, translate=0x7f0bb449d1d0 <translate_not_allowed(Tango::NotAllowed const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+---Type <return> to continue, or q <return> to quit---
+#20 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NotAllowed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::NotAllowed, void (*)(Tango::NotAllowed const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#21 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NotAllowed, void (*)(Tango::NotAllowed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NotAllowed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#22 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NotAllowed, void (*)(Tango::NotAllowed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NotAllowed const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=..., a1=...)
+    at /usr/include/boost/function/function_template.hpp:138
+#23 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#24 0x00007f0bb44a3b33 in boost::python::detail::translate_exception<Tango::DeviceUnlocked, void (*)(Tango::DeviceUnlocked const&)>::operator() (this=<optimized out>, translate=0x7f0bb449d150 <translate_device_unlocked(Tango::DeviceUnlocked const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#25 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DeviceUnlocked const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::DeviceUnlocked, void (*)(Tango::DeviceUnlocked const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#26 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::DeviceUnlocked, void (*)(Tango::DeviceUnlocked const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DeviceUnlocked const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#27 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::DeviceUnlocked, void (*)(Tango::DeviceUnlocked const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DeviceUnlocked const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=...,
+    a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#28 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#29 0x00007f0bb44a3ae3 in boost::python::detail::translate_exception<Tango::EventSystemFailed, void (*)(Tango::EventSystemFailed const&)>::operator() (this=<optimized out>, translate=0x7f0bb449d0d0 <translate_event_system_failed(Tango::EventSystemFailed const&)>, f=...,
+    handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+#30 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::EventSystemFailed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::EventSystemFailed, void (*)(Tango::EventSystemFailed const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#31 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::EventSystemFailed, void (*)(Tango::EventSystemFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::EventSystemFailed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#32 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::EventSystemFailed, void (*)(Tango::EventSystemFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::EventSystemFailed const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#33 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#34 0x00007f0bb44a3a93 in boost::python::detail::translate_exception<Tango::AsynReplyNotArrived, void (*)(Tango::AsynReplyNotArrived const&)>::operator() (this=<optimized out>, translate=0x7f0bb449d050 <translate_asyn_reply_not_arrived(Tango::AsynReplyNotArrived const&)>,
+    f=..., handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+---Type <return> to continue, or q <return> to quit---
+#35 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynReplyNotArrived const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::AsynReplyNotArrived, void (*)(Tango::AsynReplyNotArrived const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#36 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::AsynReplyNotArrived, void (*)(Tango::AsynReplyNotArrived const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynReplyNotArrived const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#37 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::AsynReplyNotArrived, void (*)(Tango::AsynReplyNotArrived const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynReplyNotArrived const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#38 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#39 0x00007f0bb44a3a43 in boost::python::detail::translate_exception<Tango::AsynCall, void (*)(Tango::AsynCall const&)>::operator() (
+    this=<optimized out>, translate=0x7f0bb449cfd0 <translate_asyn_call(Tango::AsynCall const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#40 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynCall const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::AsynCall, void (*)(Tango::AsynCall const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:388
+#41 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::AsynCall, void (*)(Tango::AsynCall const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynCall const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#42 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::AsynCall, void (*)(Tango::AsynCall const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynCall const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=..., a1=...)
+    at /usr/include/boost/function/function_template.hpp:138
+#43 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#44 0x00007f0bb44a39f3 in boost::python::detail::translate_exception<Tango::NonSupportedFeature, void (*)(Tango::NonSupportedFeature const&)>::operator() (this=<optimized out>, translate=0x7f0bb449cf50 <translate_non_supported_feature(Tango::NonSupportedFeature const&)>,
+    f=..., handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+#45 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonSupportedFeature const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::NonSupportedFeature, void (*)(Tango::NonSupportedFeature const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#46 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NonSupportedFeature, void (*)(Tango::NonSupportedFeature const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonSupportedFeature const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#47 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NonSupportedFeature, void (*)(Tango::NonSupportedFeature const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonSupportedFeature const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#48 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#49 0x00007f0bb44a39a3 in boost::python::detail::translate_exception<Tango::WrongData, void (*)(Tango::WrongData const&)>::operator() (
+    this=<optimized out>, translate=0x7f0bb449ced0 <translate_wrong_data(Tango::WrongData const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#50 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongData const&)> >::operator()<bool, boost::python:---Type <return> to continue, or q <return> to quit---
+:detail::translate_exception<Tango::WrongData, void (*)(Tango::WrongData const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#51 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::WrongData, void (*)(Tango::WrongData const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongData const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#52 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::WrongData, void (*)(Tango::WrongData const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongData const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=..., a1=...)
+    at /usr/include/boost/function/function_template.hpp:138
+#53 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#54 0x00007f0bb44a3953 in boost::python::detail::translate_exception<Tango::NonDbDevice, void (*)(Tango::NonDbDevice const&)>::operator()
+    (this=<optimized out>, translate=0x7f0bb449ce50 <translate_non_db_device(Tango::NonDbDevice const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#55 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonDbDevice const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::NonDbDevice, void (*)(Tango::NonDbDevice const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#56 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NonDbDevice, void (*)(Tango::NonDbDevice const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonDbDevice const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#57 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NonDbDevice, void (*)(Tango::NonDbDevice const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonDbDevice const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=...,
+    a1=...) at /usr/include/boost/function/function_template.hpp:138
+#58 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#59 0x00007f0bb44a3903 in boost::python::detail::translate_exception<Tango::WrongNameSyntax, void (*)(Tango::WrongNameSyntax const&)>::operator() (this=<optimized out>, translate=0x7f0bb449cdd0 <translate_wrong_name_syntax(Tango::WrongNameSyntax const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#60 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongNameSyntax const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::WrongNameSyntax, void (*)(Tango::WrongNameSyntax const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#61 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::WrongNameSyntax, void (*)(Tango::WrongNameSyntax const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongNameSyntax const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#62 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::WrongNameSyntax, void (*)(Tango::WrongNameSyntax const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongNameSyntax const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=...,
+    a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#63 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#64 0x00007f0bb44a38b3 in boost::python::detail::translate_exception<Tango::CommunicationFailed, void (*)(Tango::CommunicationFailed const&)>::operator() (this=<optimized out>, translate=0x7f0bb449cd50 <translate_communication_failed(Tango::CommunicationFailed const&)>,
+    f=..., handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+#65 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::CommunicationFailed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::CommunicationFailed, void (*)(Tango::CommunicationFailed const&)>, boost::_bi::rrlist2<boost:---Type <return> to continue, or q <return> to quit---
+:python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#66 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::CommunicationFailed, void (*)(Tango::CommunicationFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::CommunicationFailed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#67 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::CommunicationFailed, void (*)(Tango::CommunicationFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::CommunicationFailed const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#68 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#69 0x00007f0bb44a3863 in boost::python::detail::translate_exception<Tango::ConnectionFailed, void (*)(Tango::ConnectionFailed const&)>::operator() (this=<optimized out>, translate=0x7f0bb449ccd0 <translate_connection_failed(Tango::ConnectionFailed const&)>, f=...,
+    handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+#70 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::ConnectionFailed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::ConnectionFailed, void (*)(Tango::ConnectionFailed const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#71 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::ConnectionFailed, void (*)(Tango::ConnectionFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::ConnectionFailed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#72 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::ConnectionFailed, void (*)(Tango::ConnectionFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::ConnectionFailed const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#73 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#74 0x00007f0bb44a3813 in boost::python::detail::translate_exception<Tango::DevFailed, void (*)(Tango::DevFailed const&)>::operator() (
+    this=<optimized out>, translate=0x7f0bb449cc50 <translate_dev_failed(Tango::DevFailed const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#75 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DevFailed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::DevFailed, void (*)(Tango::DevFailed const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#76 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::DevFailed, void (*)(Tango::DevFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DevFailed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#77 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::DevFailed, void (*)(Tango::DevFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DevFailed const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=..., a1=...)
+    at /usr/include/boost/function/function_template.hpp:138
+#78 0x00007f0bb34700df in boost::python::handle_exception_impl(boost::function0<void>) ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#79 0x00007f0bb3466959 in ?? () from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#80 0x0000556036c4ae17 in PyObject_Call ()
+#81 0x0000556036bca4a6 in PyEval_EvalFrameEx ()
+#82 0x0000556036bb716f in PyEval_EvalCodeEx ()
+#83 0x0000556036c011ef in ?? ()
+---Type <return> to continue, or q <return> to quit---
+#84 0x0000556036c4ae17 in PyObject_Call ()
+#85 0x0000556036bc784e in PyEval_EvalFrameEx ()
+#86 0x0000556036bb716f in PyEval_EvalCodeEx ()
+#87 0x0000556036c011ef in ?? ()
+#88 0x0000556036c4ae17 in PyObject_Call ()
+#89 0x0000556036bc784e in PyEval_EvalFrameEx ()
+#90 0x0000556036bceb06 in ?? ()
+#91 0x0000556036bca639 in PyEval_EvalFrameEx ()
+#92 0x0000556036bcf02f in ?? ()
+#93 0x0000556036bca9e6 in PyEval_EvalFrameEx ()
+#94 0x0000556036bb716f in PyEval_EvalCodeEx ()
+#95 0x0000556036c011ef in ?? ()
+#96 0x0000556036c4ae17 in PyObject_Call ()
+#97 0x0000556036bc784e in PyEval_EvalFrameEx ()
+#98 0x0000556036bceb06 in ?? ()
+#99 0x0000556036bca9e6 in PyEval_EvalFrameEx ()
+#100 0x0000556036bb78a7 in PyEval_EvalCodeEx ()
+#101 0x0000556036c010e3 in ?? ()
+#102 0x0000556036c4ae17 in PyObject_Call ()
+#103 0x0000556036b6834e in ?? ()
+#104 0x0000556036c4ae17 in PyObject_Call ()
+#105 0x0000556036bb5f30 in PyEval_CallObjectWithKeywords ()
+#106 0x0000556036c96ab1 in PyEval_CallMethod ()
+#107 0x00007f0bb44eb15b in boost::python::call_method<void, boost::reference_wrapper<Tango::Attribute> > (self=0x7f0b9a168340,
+    name=0x556037d6ec90 "__read_attr1_wrapper__", a0=...) at /usr/include/boost/python/call_method.hpp:66
+#108 0x00007f0bb44e2a78 in PyAttr::read (this=0x556037d71b68, dev=<optimized out>, att=...)
+    at /home/zreszela/workspace/pytango/ext/server/attr.cpp:76
+#109 0x00007f0bb39fb910 in Tango::Device_3Impl::read_attributes_no_except (this=this@entry=0x556037d71f40, names=..., aid=...,
+    second_try=second_try@entry=true, idx=std::vector of length 1, capacity 1 = {...}) at device_3.cpp:541
+#110 0x00007f0bb3a17df7 in Tango::Device_5Impl::read_attributes_5 (this=0x556037d71f40, names=..., source=<optimized out>, cl_id=...)
+    at device_5.cpp:340
+#111 0x00007f0bb3bc805b in _0RL_lcfn_6fe2f94a21a10053_84000000 (cd=0x7f0b93ffeaa0, svnt=<optimized out>) at tangoSK.cpp:6272
+#112 0x00007f0bb2278b69 in omniCallHandle::upcall(omniServant*, omniCallDescriptor&) () from /usr/lib/libomniORB4.so.1
+#113 0x00007f0bb3bca1b0 in Tango::_impl_Device_5::_dispatch (this=<optimized out>, _handle=...) at tangoSK.cpp:7158
+#114 0x00007f0bb2271f6d in omni::omniOrbPOA::dispatch(omniCallHandle&, omniLocalIdentity*) () from /usr/lib/libomniORB4.so.1
+#115 0x00007f0bb2251116 in omniLocalIdentity::dispatch(omniCallHandle&) () from /usr/lib/libomniORB4.so.1
+#116 0x00007f0bb2291d20 in omni::GIOP_S::handleRequest() () from /usr/lib/libomniORB4.so.1
+#117 0x00007f0bb2292a98 in omni::GIOP_S::dispatcher() () from /usr/lib/libomniORB4.so.1
+#118 0x00007f0bb228f6c5 in omni::giopWorker::real_execute() () from /usr/lib/libomniORB4.so.1
+#119 0x00007f0bb228fd4f in omni::giopWorker::execute() () from /usr/lib/libomniORB4.so.1
+#120 0x00007f0bb224602d in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#121 0x00007f0bb3b84c4c in Tango::create_PyPerThData (info=...) at utils.cpp:3234
+#122 0x00007f0bb2245f24 in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#123 0x00007f0bb22465ff in omniAsyncWorker::run(void*) () from /usr/lib/libomniORB4.so.1
+#124 0x00007f0bb1f876d9 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#125 0x00007f0bb5a5e494 in start_thread (arg=0x7f0b93fff700) at pthread_create.c:333
+#126 0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 9 (Thread 0x7f0b98926700 (LWP 17580)):
+#0  0x00007f0bb5a674ff in __libc_recv (fd=23, buf=0x7f0b7c000d58, n=8192, flags=0) at ../sysdeps/unix/sysv/linux/x86_64/recv.c:28
+---Type <return> to continue, or q <return> to quit---
+#1  0x00007f0bb22c90d2 in omni::unixConnection::Recv(void*, unsigned long, unsigned long, unsigned long) () from /usr/lib/libomniORB4.so.1
+#2  0x00007f0bb228a987 in omni::giopStream::inputMessage() () from /usr/lib/libomniORB4.so.1
+#3  0x00007f0bb229fd43 in omni::giopImpl12::inputNewServerMessage(omni::giopStream*) () from /usr/lib/libomniORB4.so.1
+#4  0x00007f0bb229fe70 in omni::giopImpl12::inputMessageBegin(omni::giopStream*, void (*)(omni::giopStream*)) ()
+   from /usr/lib/libomniORB4.so.1
+#5  0x00007f0bb2292961 in omni::GIOP_S::dispatcher() () from /usr/lib/libomniORB4.so.1
+#6  0x00007f0bb228f6c5 in omni::giopWorker::real_execute() () from /usr/lib/libomniORB4.so.1
+#7  0x00007f0bb228fd4f in omni::giopWorker::execute() () from /usr/lib/libomniORB4.so.1
+#8  0x00007f0bb224602d in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#9  0x00007f0bb3b84c4c in Tango::create_PyPerThData (info=...) at utils.cpp:3234
+#10 0x00007f0bb2245f24 in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#11 0x00007f0bb22465ff in omniAsyncWorker::run(void*) () from /usr/lib/libomniORB4.so.1
+#12 0x00007f0bb1f876d9 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#13 0x00007f0bb5a5e494 in start_thread (arg=0x7f0b98926700) at pthread_create.c:333
+#14 0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 8 (Thread 0x7f0b99127700 (LWP 17569)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f0bb1f86cc4 in omni_condition::timedwait(unsigned long, unsigned long) () from /usr/lib/libomnithread.so.3
+#2  0x00007f0bb3b7fdf9 in Tango::TangoMonitor::wait (this=0x556037d41ea0, nb_millis=nb_millis@entry=1799998) at utils.cpp:3176
+#3  0x00007f0bb3ab6623 in Tango::PollThread::get_command (this=this@entry=0x556037d633b0, tout=1799998) at pollthread.cpp:287
+#4  0x00007f0bb3abe140 in Tango::PollThread::run_undetached (this=0x556037d633b0, ptr=<optimized out>) at pollthread.cpp:165
+#5  0x00007f0bb1f876c1 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#6  0x00007f0bb5a5e494 in start_thread (arg=0x7f0b99127700) at pthread_create.c:333
+#7  0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 7 (Thread 0x7f0b99928700 (LWP 17568)):
+#0  0x00007f0bb4c520c3 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f0bb1b04914 in ?? () from /usr/lib/x86_64-linux-gnu/libzmq.so.5
+#2  0x00007f0bb1b4085c in ?? () from /usr/lib/x86_64-linux-gnu/libzmq.so.5
+#3  0x00007f0bb5a5e494 in start_thread (arg=0x7f0b99928700) at pthread_create.c:333
+#4  0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 6 (Thread 0x7f0b9a129700 (LWP 17567)):
+#0  0x00007f0bb4c520c3 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f0bb1b04914 in ?? () from /usr/lib/x86_64-linux-gnu/libzmq.so.5
+#2  0x00007f0bb1b4085c in ?? () from /usr/lib/x86_64-linux-gnu/libzmq.so.5
+#3  0x00007f0bb5a5e494 in start_thread (arg=0x7f0b9a129700) at pthread_create.c:333
+#4  0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 5 (Thread 0x7f0ba8dd9700 (LWP 17566)):
+#0  0x00007f0bb4c4867d in poll () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f0bb22a6f09 in omni::SocketCollection::Select() () from /usr/lib/libomniORB4.so.1
+#2  0x00007f0bb22c9681 in omni::unixEndpoint::AcceptAndMonitor(void (*)(void*, omni::giopConnection*), void*) ()
+   from /usr/lib/libomniORB4.so.1
+#3  0x00007f0bb228fdf5 in omni::giopRendezvouser::execute() () from /usr/lib/libomniORB4.so.1
+#4  0x00007f0bb224602d in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#5  0x00007f0bb3b84c4c in Tango::create_PyPerThData (info=...) at utils.cpp:3234
+#6  0x00007f0bb2245f24 in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#7  0x00007f0bb22465ff in omniAsyncWorker::run(void*) () from /usr/lib/libomniORB4.so.1
+---Type <return> to continue, or q <return> to quit---
+#8  0x00007f0bb1f876d9 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#9  0x00007f0bb5a5e494 in start_thread (arg=0x7f0ba8dd9700) at pthread_create.c:333
+#10 0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 4 (Thread 0x7f0ba65d8700 (LWP 17565)):
+#0  0x00007f0bb4c4867d in poll () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f0bb22a6f09 in omni::SocketCollection::Select() () from /usr/lib/libomniORB4.so.1
+#2  0x00007f0bb22c49d1 in omni::tcpEndpoint::AcceptAndMonitor(void (*)(void*, omni::giopConnection*), void*) ()
+   from /usr/lib/libomniORB4.so.1
+#3  0x00007f0bb228fdf5 in omni::giopRendezvouser::execute() () from /usr/lib/libomniORB4.so.1
+#4  0x00007f0bb224602d in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#5  0x00007f0bb3b84c4c in Tango::create_PyPerThData (info=...) at utils.cpp:3234
+#6  0x00007f0bb2245f24 in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#7  0x00007f0bb22465ff in omniAsyncWorker::run(void*) () from /usr/lib/libomniORB4.so.1
+#8  0x00007f0bb1f876d9 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#9  0x00007f0bb5a5e494 in start_thread (arg=0x7f0ba65d8700) at pthread_create.c:333
+#10 0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 3 (Thread 0x7f0ba5dd7700 (LWP 17563)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f0bb1f86cc4 in omni_condition::timedwait(unsigned long, unsigned long) () from /usr/lib/libomnithread.so.3
+#2  0x00007f0bb2287f5d in omni::Scavenger::execute() () from /usr/lib/libomniORB4.so.1
+#3  0x00007f0bb224602d in omniAsyncWorkerInfo::run() () from /usr/lib/libomniORB4.so.1
+#4  0x00007f0bb22465ff in omniAsyncWorker::run(void*) () from /usr/lib/libomniORB4.so.1
+#5  0x00007f0bb1f876d9 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#6  0x00007f0bb5a5e494 in start_thread (arg=0x7f0ba5dd7700) at pthread_create.c:333
+#7  0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 2 (Thread 0x7f0ba55d6700 (LWP 17562)):
+#0  do_sigwait (set=<optimized out>, set@entry=0x7f0ba55d5e70, sig=sig@entry=0x7f0ba55d5e2c) at ../sysdeps/unix/sysv/linux/sigwait.c:64
+#1  0x00007f0bb5a67ced in __sigwait (set=set@entry=0x7f0ba55d5e70, sig=sig@entry=0x7f0ba55d5e2c)
+    at ../sysdeps/unix/sysv/linux/sigwait.c:96
+#2  0x00007f0bb3b7e957 in Tango::DServerSignal::ThSig::run_undetached (this=0x556037d531c0, ptr=<optimized out>) at thsig.cpp:91
+#3  0x00007f0bb1f876c1 in omni_thread_wrapper () from /usr/lib/libomnithread.so.3
+#4  0x00007f0bb5a5e494 in start_thread (arg=0x7f0ba55d6700) at pthread_create.c:333
+#5  0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
+
+Thread 1 (Thread 0x7f0bb5e69700 (LWP 17548)):
+#0  pthread_cond_wait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+#1  0x00007f0bb1f86c60 in omni_condition::wait() () from /usr/lib/libomnithread.so.3
+#2  0x00007f0bb2230bf4 in omni::ORBAsyncInvoker::perform(unsigned long, unsigned long) () from /usr/lib/libomniORB4.so.1
+#3  0x00007f0bb3b7fa63 in Tango::Util::server_run (this=this@entry=0x556037d41cd0) at utils.cpp:2059
+#4  0x00007f0bb45cab89 in PyUtil::server_run (instance=...) at /home/zreszela/workspace/pytango/ext/server/tango_util.cpp:68
+#5  0x00007f0bb45d1bd2 in boost::python::detail::invoke<int, void (*)(Tango::Util&), boost::python::arg_from_python<Tango::Util&> > (
+    f=@0x556037c4b178: 0x7f0bb45cab70 <PyUtil::server_run(Tango::Util&)>, ac0=<synthetic pointer>...)
+    at /usr/include/boost/python/detail/invoke.hpp:81
+#6  boost::python::detail::caller_arity<1u>::impl<void (*)(Tango::Util&), boost::python::default_call_policies, boost::mpl::vector2<void, Tango::Util&> >::operator() (args_=<optimized out>, this=0x556037c4b178) at /usr/include/boost/python/detail/caller.hpp:223
+#7  boost::python::objects::caller_py_function_impl<boost::python::detail::caller<void (*)(Tango::Util&), boost::python::default_call_policies, boost::mpl::vector2<void, Tango::Util&> > >::operator() (this=0x556037c4b170, args=<optimized out>, kw=<optimized out>)
+---Type <return> to continue, or q <return> to quit---
+    at /usr/include/boost/python/object/py_function.hpp:38
+#8  0x00007f0bb34694ad in boost::python::objects::function::call(_object*, _object*) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#9  0x00007f0bb34696a8 in ?? () from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#10 0x00007f0bb347033b in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#11 0x00007f0bb44a3b83 in boost::python::detail::translate_exception<Tango::NotAllowed, void (*)(Tango::NotAllowed const&)>::operator() (
+    this=<optimized out>, translate=0x7f0bb449d1d0 <translate_not_allowed(Tango::NotAllowed const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#12 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NotAllowed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::NotAllowed, void (*)(Tango::NotAllowed const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#13 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NotAllowed, void (*)(Tango::NotAllowed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NotAllowed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#14 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NotAllowed, void (*)(Tango::NotAllowed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NotAllowed const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=..., a1=...)
+    at /usr/include/boost/function/function_template.hpp:138
+#15 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#16 0x00007f0bb44a3b33 in boost::python::detail::translate_exception<Tango::DeviceUnlocked, void (*)(Tango::DeviceUnlocked const&)>::operator() (this=<optimized out>, translate=0x7f0bb449d150 <translate_device_unlocked(Tango::DeviceUnlocked const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#17 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DeviceUnlocked const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::DeviceUnlocked, void (*)(Tango::DeviceUnlocked const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#18 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::DeviceUnlocked, void (*)(Tango::DeviceUnlocked const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DeviceUnlocked const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#19 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::DeviceUnlocked, void (*)(Tango::DeviceUnlocked const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DeviceUnlocked const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=...,
+    a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#20 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#21 0x00007f0bb44a3ae3 in boost::python::detail::translate_exception<Tango::EventSystemFailed, void (*)(Tango::EventSystemFailed const&)>::operator() (this=<optimized out>, translate=0x7f0bb449d0d0 <translate_event_system_failed(Tango::EventSystemFailed const&)>, f=...,
+    handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+#22 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::EventSystemFailed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::EventSystemFailed, void (*)(Tango::EventSystemFailed const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#23 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::EventSystemFailed, void (*)(Tango::EventSystemFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::EventSystemFailed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+---Type <return> to continue, or q <return> to quit---
+#24 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::EventSystemFailed, void (*)(Tango::EventSystemFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::EventSystemFailed const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#25 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#26 0x00007f0bb44a3a93 in boost::python::detail::translate_exception<Tango::AsynReplyNotArrived, void (*)(Tango::AsynReplyNotArrived const&)>::operator() (this=<optimized out>, translate=0x7f0bb449d050 <translate_asyn_reply_not_arrived(Tango::AsynReplyNotArrived const&)>,
+    f=..., handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+#27 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynReplyNotArrived const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::AsynReplyNotArrived, void (*)(Tango::AsynReplyNotArrived const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#28 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::AsynReplyNotArrived, void (*)(Tango::AsynReplyNotArrived const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynReplyNotArrived const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#29 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::AsynReplyNotArrived, void (*)(Tango::AsynReplyNotArrived const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynReplyNotArrived const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#30 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#31 0x00007f0bb44a3a43 in boost::python::detail::translate_exception<Tango::AsynCall, void (*)(Tango::AsynCall const&)>::operator() (
+    this=<optimized out>, translate=0x7f0bb449cfd0 <translate_asyn_call(Tango::AsynCall const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#32 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynCall const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::AsynCall, void (*)(Tango::AsynCall const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:388
+#33 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::AsynCall, void (*)(Tango::AsynCall const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynCall const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#34 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::AsynCall, void (*)(Tango::AsynCall const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::AsynCall const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=..., a1=...)
+    at /usr/include/boost/function/function_template.hpp:138
+#35 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#36 0x00007f0bb44a39f3 in boost::python::detail::translate_exception<Tango::NonSupportedFeature, void (*)(Tango::NonSupportedFeature const&)>::operator() (this=<optimized out>, translate=0x7f0bb449cf50 <translate_non_supported_feature(Tango::NonSupportedFeature const&)>,
+    f=..., handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+#37 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonSupportedFeature const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::NonSupportedFeature, void (*)(Tango::NonSupportedFeature const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#38 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NonSupportedFeature, void (*)(Tango::NonSupportedFeature const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonSupportedFeature const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#39 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NonSupportedF---Type <return> to continue, or q <return> to quit---
+eature, void (*)(Tango::NonSupportedFeature const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonSupportedFeature const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#40 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#41 0x00007f0bb44a39a3 in boost::python::detail::translate_exception<Tango::WrongData, void (*)(Tango::WrongData const&)>::operator() (
+    this=<optimized out>, translate=0x7f0bb449ced0 <translate_wrong_data(Tango::WrongData const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#42 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongData const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::WrongData, void (*)(Tango::WrongData const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#43 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::WrongData, void (*)(Tango::WrongData const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongData const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#44 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::WrongData, void (*)(Tango::WrongData const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongData const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=..., a1=...)
+    at /usr/include/boost/function/function_template.hpp:138
+#45 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#46 0x00007f0bb44a3953 in boost::python::detail::translate_exception<Tango::NonDbDevice, void (*)(Tango::NonDbDevice const&)>::operator()
+    (this=<optimized out>, translate=0x7f0bb449ce50 <translate_non_db_device(Tango::NonDbDevice const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#47 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonDbDevice const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::NonDbDevice, void (*)(Tango::NonDbDevice const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#48 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NonDbDevice, void (*)(Tango::NonDbDevice const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonDbDevice const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#49 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::NonDbDevice, void (*)(Tango::NonDbDevice const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::NonDbDevice const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=...,
+    a1=...) at /usr/include/boost/function/function_template.hpp:138
+#50 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#51 0x00007f0bb44a3903 in boost::python::detail::translate_exception<Tango::WrongNameSyntax, void (*)(Tango::WrongNameSyntax const&)>::operator() (this=<optimized out>, translate=0x7f0bb449cdd0 <translate_wrong_name_syntax(Tango::WrongNameSyntax const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#52 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongNameSyntax const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::WrongNameSyntax, void (*)(Tango::WrongNameSyntax const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#53 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::WrongNameSyntax, void (*)(Tango::WrongNameSyntax const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongNameSyntax const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#54 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::WrongNameSyntax, void (*)(Tango::WrongNameSyntax const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::WrongNameSy---Type <return> to continue, or q <return> to quit---
+ntax const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=...,
+    a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#55 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#56 0x00007f0bb44a38b3 in boost::python::detail::translate_exception<Tango::CommunicationFailed, void (*)(Tango::CommunicationFailed const&)>::operator() (this=<optimized out>, translate=0x7f0bb449cd50 <translate_communication_failed(Tango::CommunicationFailed const&)>,
+    f=..., handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+#57 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::CommunicationFailed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::CommunicationFailed, void (*)(Tango::CommunicationFailed const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#58 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::CommunicationFailed, void (*)(Tango::CommunicationFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::CommunicationFailed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#59 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::CommunicationFailed, void (*)(Tango::CommunicationFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::CommunicationFailed const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#60 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#61 0x00007f0bb44a3863 in boost::python::detail::translate_exception<Tango::ConnectionFailed, void (*)(Tango::ConnectionFailed const&)>::operator() (this=<optimized out>, translate=0x7f0bb449ccd0 <translate_connection_failed(Tango::ConnectionFailed const&)>, f=...,
+    handler=...) at /usr/include/boost/python/detail/translate_exception.hpp:48
+#62 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::ConnectionFailed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::ConnectionFailed, void (*)(Tango::ConnectionFailed const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#63 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::ConnectionFailed, void (*)(Tango::ConnectionFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::ConnectionFailed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:1318
+#64 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::ConnectionFailed, void (*)(Tango::ConnectionFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::ConnectionFailed const&)> > >, bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (
+    function_obj_ptr=..., a0=..., a1=...) at /usr/include/boost/function/function_template.hpp:138
+#65 0x00007f0bb347030a in boost::python::detail::exception_handler::operator()(boost::function0<void> const&) const ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#66 0x00007f0bb44a3813 in boost::python::detail::translate_exception<Tango::DevFailed, void (*)(Tango::DevFailed const&)>::operator() (
+    this=<optimized out>, translate=0x7f0bb449cc50 <translate_dev_failed(Tango::DevFailed const&)>, f=..., handler=...)
+    at /usr/include/boost/python/detail/translate_exception.hpp:48
+#67 boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DevFailed const&)> >::operator()<bool, boost::python::detail::translate_exception<Tango::DevFailed, void (*)(Tango::DevFailed const&)>, boost::_bi::rrlist2<boost::python::detail::exception_handler const&, boost::function0<void> const&> > (f=..., a=<synthetic pointer>..., this=<optimized out>)
+    at /usr/include/boost/bind/bind.hpp:388
+#68 boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::DevFailed, void (*)(Tango::DevFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DevFailed const&)> > >::operator()<boost::python::detail::exception_handler const&, boost::function0<void> const&> (a2=..., a1=..., this=<optimized out>) at /usr/include/boost/bind/bind.hpp:1318
+#69 boost::detail::function::function_obj_invoker2<boost::_bi::bind_t<bool, boost::python::detail::translate_exception<Tango::DevFailed, void (*)(Tango::DevFailed const&)>, boost::_bi::list3<boost::arg<1>, boost::arg<2>, boost::_bi::value<void (*)(Tango::DevFailed const&)> > >,---Type <return> to continue, or q <return> to quit---
+ bool, boost::python::detail::exception_handler const&, boost::function0<void> const&>::invoke (function_obj_ptr=..., a0=..., a1=...)
+    at /usr/include/boost/function/function_template.hpp:138
+#70 0x00007f0bb34700df in boost::python::handle_exception_impl(boost::function0<void>) ()
+   from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#71 0x00007f0bb3466959 in ?? () from /usr/lib/x86_64-linux-gnu/libboost_python-py35.so.1.62.0
+#72 0x0000556036c4ae17 in PyObject_Call ()
+#73 0x0000556036bca4a6 in PyEval_EvalFrameEx ()
+#74 0x0000556036bb78a7 in PyEval_EvalCodeEx ()
+#75 0x0000556036c011ef in ?? ()
+#76 0x0000556036c4ae17 in PyObject_Call ()
+#77 0x0000556036bc784e in PyEval_EvalFrameEx ()
+#78 0x0000556036bceb06 in ?? ()
+#79 0x0000556036bca639 in PyEval_EvalFrameEx ()
+#80 0x0000556036bb78a7 in PyEval_EvalCodeEx ()
+#81 0x0000556036c011ef in ?? ()
+#82 0x0000556036c4ae17 in PyObject_Call ()
+#83 0x0000556036c88504 in ?? ()
+#84 0x0000556036c4ae17 in PyObject_Call ()
+#85 0x0000556036bca4a6 in PyEval_EvalFrameEx ()
+#86 0x0000556036bceb06 in ?? ()
+#87 0x0000556036bca639 in PyEval_EvalFrameEx ()
+#88 0x0000556036bceb06 in ?? ()
+#89 0x0000556036bcf7bf in PyEval_EvalCode ()
+#90 0x0000556036c94a22 in ?? ()
+#91 0x0000556036c96ead in PyRun_FileExFlags ()
+#92 0x0000556036c9764e in PyRun_SimpleFileExFlags ()
+#93 0x0000556036cc42e7 in Py_Main ()
+#94 0x0000556036b53d71 in main ()

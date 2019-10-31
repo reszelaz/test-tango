@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <multiClasses pogoRevision="9.4" name="DeviceServer" sourcePath="/home/zreszela/workspace/test2-tango-cpp" description="" filestogenerate="XMI   file,Code files,Makefile,Protected Regions">
+    <classes classname="Device2" sourcePath="./">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <parentClasses>Device1</parentClasses>
+    </classes>
+    <classes classname="Device1" sourcePath="./">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+    </classes>
+    <preferences makefileHome="/usr/share/pogo/preferences"/>
+  </multiClasses>
+</pogoDsl:PogoSystem>
