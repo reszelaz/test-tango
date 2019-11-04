@@ -307,7 +307,7 @@ You can find backtrace of all threads in [`threads_backtrace.txt`](https://githu
 
 In order to reproduce the problem:
 1. Register in Tango Database one DeviceServer DS with instance name `test`
-   with 2 devices of PyDsExp class with the following names: `test/device1/1`, `test/device2/1`
+   with 2 devices of `Device1` and `Device2` classes, with the following names: `test/device1/1`, `test/device2/1` respectively.
     ```console
     tango_admin --add-server DeviceServer/test Device1 test/device1/1    
     tango_admin --add-server DeviceServer/test Device2 test/device2/1
