@@ -1,12 +1,14 @@
-# test2-tango-py3
+# Demo a bug in (Py)Tango? 
 
-Example to reproduce a problem with the concurrent subscribe to attributes and
+Example to reproduce a problem with the concurrent subscription to attributes and
 destruction of DeviceProxies. This problem is reproducible with both python2 and python3.
 
 The architecture is as following. We have one DS called `DeviceServer` which exports in
 total two devices, each of a different class. These two classes are:
-* `Device1` with one attribute `attr1`
-* `Device2` with one attribute `attr2`
+* `Device1` with one attribute `attr1` and one command `cmd1`
+* `Device2` with one attribute `attr2` and one command `cmd2`
+
+## Demo with attributes readout
 
 When `attr1` is read it creates a disposable `DeviceProxy` to `sys/tg_test/1` and
 subscribes to `ATTR_CONF_EVENT` of `double_scalar`.
@@ -303,9 +305,29 @@ Thread 10 (Thread 0x7f0b93fff700 (LWP 17597)):
 #126 0x00007f0bb4c51acf in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:97
 ```
 
-You can find backtrace of all threads in [`threads_backtrace.txt`](https://github.com/reszelaz/test-tango/blob/master/threads_backtrace.txt) file.
+You can find backtrace of all threads in [`threads_backtrace_attr.txt`](https://github.com/reszelaz/test-tango/blob/master/threads_backtrace_attr.txt) file.
 
-In order to reproduce the problem:
+## Demo with commands and background jobs execution
+
+When `cmd1` is executed it starts a thread in order to execute a background job.
+This job creates a disposable `DeviceProxy` to `sys/tg_test/1` and
+subscribes to `ATTR_CONF_EVENT` of `double_scalar` exactly in the same way as `attr1` readout.
+
+When `cmd2` is executed it starts a thread in order to execute a background job.
+This job creates a disposable `DeviceProxy` to `sys/tg_test/1` exactly the same way as `attr2` readout.
+
+There are also two client scripts `client3.py` and `client4.py` which execute in a loop
+`cmd1` and `cmd2` respectively.
+
+When running in parallel the `DeviceServer`, `client3.py` and `client4.py`,
+after just few seconds both clients stop with: `TRANSIENT CORBA system exception: TRANSIENT_CallTimedout`
+and the device server gets hung. Any Tango request to it also gives:
+`TRANSIENT CORBA system exception: TRANSIENT_CallTimedout`
+
+You can find backtrace of all threads in [`threads_backtrace_cmd.txt`](https://github.com/reszelaz/test-tango/blob/master/threads_backtrace_attr.txt) file.
+They point to the same problem as in case of reading attributes.
+
+## Steps to reproduce the problem
 1. Register in Tango Database one DeviceServer DS with instance name `test`
    with 2 devices of `Device1` and `Device2` classes, with the following names: `test/device1/1`, `test/device2/1` respectively.
     ```console
@@ -313,13 +335,16 @@ In order to reproduce the problem:
     tango_admin --add-server DeviceServer/test Device2 test/device2/1
     ```
 2. Start DeviceServer: `python3 DeviceServer.py test`
-3. Start client1: `python3 client1.py`
-4. Start client2: `python3 client2.py`
-5. Wait no more than 10 s...
+3. Start clients:
+  * Using attributes readout:
+    1. Start client1: `python3 client1.py`
+    2. Start client2: `python3 client2.py`
+  * Using commands and background jobs execution:
+    1. Start client3: `python3 client3.py`
+    2. Start client4: `python3 client4.py`
+4. Wait no more than 10 s...
 
-I was not able to reproduce the problem with C++. See the files in [`cpp`](https://github.com/reszelaz/test-tango/tree/master/cpp)
+I was not able to reproduce the problem with C++ (I have not tried using commands). See the files in [`cpp`](https://github.com/reszelaz/test-tango/tree/master/cpp)
 subdirectory of this project, you can compile it with `make -f Makefile.multi`.
 But I'm not at all used to program in C++ so it may be not exactly equivalent.
 
-Also, this issue may be relted to a similar problem
-[test-tango-py3](https://github.com/reszelaz/test-tango-py3).
