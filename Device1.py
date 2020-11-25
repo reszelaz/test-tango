@@ -32,7 +32,8 @@ class Device1(Device):
         self.set_state(tango.DevState.MOVING)
 
         def job(device):
-            read_double_scalar()
-            device.set_state(tango.DevState.ON)
+            with tango.EnsureOmniThread():
+                read_double_scalar()
+                device.set_state(tango.DevState.ON)
 
         threading.Thread(target=job, args=(self, )).start()

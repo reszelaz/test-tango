@@ -28,7 +28,8 @@ class Device2(Device):
         self.set_state(tango.DevState.MOVING)
 
         def job(device):
-            create_device_proxy()
-            device.set_state(tango.DevState.ON)
+            with tango.EnsureOmniThread():
+                create_device_proxy()
+                device.set_state(tango.DevState.ON)
 
         threading.Thread(target=job, args=(self, )).start()
