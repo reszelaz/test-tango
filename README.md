@@ -348,3 +348,40 @@ I was not able to reproduce the problem with C++ (I have not tried using command
 subdirectory of this project, you can compile it with `make -f Makefile.multi`.
 But I'm not at all used to program in C++ so it may be not exactly equivalent.
 
+## Demo with continuous listening to events and parallel destructing DeviceProxy
+
+When `Start` command of `DeviceEventGenerator` is executed it starts a thread
+which will execute a background job. This job continuously pushes change events on
+attribute `attr_with_events`.
+
+When `Start` command of `Device3` is executed it starts a thread which will
+execute a background job. This job will once subscribe the `attr_with_events`
+event and will continue listening to the events.
+
+`client5.py` after executing the above commands will continuously read `attr2`
+of `Device2`. This attribute readout just creates a disposable `DeviceProxy`
+to `sys/tg_test/1`.
+
+When running in parallel the `DeviceServerEventGenerator`, `DeviceServer2` and
+`client5.py` it seems to not hang in contrary to the other two demos.
+
+## Steps to reproduce the problem
+1. Register in Tango Database one `DeviceServerEventGenerator` DS with instance name `test`
+   with 1 device of `DeviceEventGenerator` class, with the following name: `test/deviceeventgenerator/1`.
+    ```console
+    tango_admin --add-server DeviceServerEventGenerator/test DeviceEventGenerator test/deviceeventgenerator/1
+    ```
+2. Register in Tango Database one DeviceServer2 DS with instance name `test`
+   with 2 devices of `Device2` and `Device3` classes, with the following names: `test/device2/2`, `test/device3/1` respectively.
+    ```console
+    tango_admin --add-server DeviceServer2/test Device2 test/device2/2    
+    tango_admin --add-server DeviceServer2/test Device3 test/device3/1
+    ```
+3. Start DeviceServerEventGenerator: `python3 DeviceServerEventGenerator.py test`
+4. Start DeviceServer2: `python3 DeviceServer2.py test`
+3. Start client5: `python3 client5.py`
+4. Wait...
+
+I was not able to reproduce the problem with C++ (I have not tried using commands). See the files in [`cpp`](https://github.com/reszelaz/test-tango/tree/master/cpp)
+subdirectory of this project, you can compile it with `make -f Makefile.multi`.
+But I'm not at all used to program in C++ so it may be not exactly equivalent.
