@@ -382,6 +382,8 @@ When running in parallel the `DeviceServerEventGenerator`, `DeviceServer2` and
 3. Start client5: `python3 client5.py`
 4. Wait...
 
+# Demo with C++
+
 I was not able to reproduce the problem with C++ (I have not tried using commands). See the files in [`cpp`](https://github.com/reszelaz/test-tango/tree/master/cpp)
 subdirectory of this project, you can compile it with `make -f Makefile.multi`.
 But I'm not at all used to program in C++ so it may be not exactly equivalent.
