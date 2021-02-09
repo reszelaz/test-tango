@@ -324,7 +324,7 @@ after just few seconds both clients stop with: `TRANSIENT CORBA system exception
 and the device server gets hung. Any Tango request to it also gives:
 `TRANSIENT CORBA system exception: TRANSIENT_CallTimedout`
 
-You can find backtrace of all threads in [`threads_backtrace_cmd.txt`](https://github.com/reszelaz/test-tango/blob/master/threads_backtrace_attr.txt) file.
+You can find backtrace of all threads in [`threads_backtrace_cmd.txt`](https://github.com/reszelaz/test-tango/blob/master/threads_backtrace_cmd.txt) file.
 They point to the same problem as in case of reading attributes.
 
 ## Steps to reproduce the problem
